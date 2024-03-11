@@ -12,11 +12,11 @@ RUN apt-get update && apt-get install -y \
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
+# Create a non-root user for Composer
+RUN useradd -ms /bin/bash composer
+
 # Set the working directory in the container
 WORKDIR /var/www/html
-
-# Set environment variable to allow Composer to run as superuser
-ENV COMPOSER_ALLOW_SUPERUSER=1
 
 # Copy composer files and install dependencies
 COPY composer.json composer.lock ./
@@ -24,14 +24,14 @@ COPY composer.json composer.lock ./
 # Clean up the vendor directory
 RUN rm -rf vendor
 
-# Run composer install without optimizations
-RUN composer install --no-scripts --no-autoloader
+# Run composer install without optimizations as non-root user
+RUN su -c "composer install --no-scripts --no-autoloader" -s /bin/bash composer
 
 # Copy the rest of the application code
 COPY . .
 
 # Run Composer scripts
-RUN composer dump-autoload --optimize
+RUN su -c "composer dump-autoload --optimize" -s /bin/bash composer
 
 # Expose port 8000 to the outside world
 EXPOSE 8000
