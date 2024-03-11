@@ -24,6 +24,9 @@ COPY composer.json composer.lock ./
 # Clean up the vendor directory
 RUN rm -rf vendor
 
+# Set Composer environment variables
+ENV COMPOSER_HOME=/tmp COMPOSER_ALLOW_SUPERUSER=1 COMPOSER_NO_INTERACTION=1
+
 # Run composer install without optimizations as non-root user
 RUN su -c "composer install --no-scripts --no-autoloader" -s /bin/bash composer
 
