@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\ProductCategory;
+use App\Models\ProductStock;
 use Illuminate\Http\Request;
 use Illuminate\Pagination;
 use Illuminate\Contracts\Support\Jsonable;
+use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
 {
@@ -17,14 +20,15 @@ class ProductController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        $validatedData = Validator::make($request->all(),[
             'name' => 'required|string',
             'description' => 'nullable|string',
             'is_active' => 'required|boolean',
             'price' => 'required|numeric',
+            'id_category' => 'required',
         ]);
-
-        $product = Product::create($validatedData);
+        $product = Product::create($request->all());
+        $stok = ProductStock::create(['id_product' => $product->id,'units'=> 0]);
 
         return response()->json(['data' => $product], 201);
     }
@@ -39,14 +43,15 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($id);
 
-        $validatedData = $request->validate([
+        $validatedData = Validator::make($request->all(),[
             'name' => 'string',
             'description' => 'nullable|string',
             'is_active' => 'boolean',
             'price' => 'numeric',
+            'id_category' => '',
         ]);
 
-        $product->update($validatedData);
+        $product->update($request->all());
 
         return response()->json(['data' => $product]);
     }
