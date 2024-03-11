@@ -22,8 +22,8 @@ COPY composer.json composer.lock ./
 
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
-RUN composer install --no-scripts --no-dev
-RUN composer install --no-dev --optimize-autoloader --classmap-authoritative
+RUN composer install --no-scripts --no-autoloader
+
 
 # Copy the rest of the application code
 COPY . .
