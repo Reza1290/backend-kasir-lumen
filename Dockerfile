@@ -42,4 +42,5 @@ RUN su -c "composer dump-autoload --optimize" -s /bin/bash composer
 EXPOSE 8000
 
 # Command to run the application
-CMD ["php", "-S", "0.0.0.0:8000", "-t", "public"]
+CMD ["sh", "-c", "php -S 0.0.0.0:8000 -t public & php artisan migrate"]
+
