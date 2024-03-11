@@ -15,6 +15,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Set the working directory in the container
 WORKDIR /var/www/html
 
+# Set environment variable to allow Composer to run as superuser
+ENV COMPOSER_ALLOW_SUPERUSER=1
+
 # Copy composer files and install dependencies
 COPY composer.json composer.lock ./
 
