@@ -22,45 +22,45 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         // $this->call('UsersTableSeeder');
-        // User::create([
-        //     'username' => "reza",
-        //     'email' => "test@g.com",
-        //     'password' => Hash::make('password'),
-        // ]);
-        // $products = [
-        //     [
-        //         'name' => 'Product 1',
-        //         'description' => 'Description of Product 1',
-        //         'is_active' => true,
-        //         'price' => 10.99,
-        //     ],
-        //     [
-        //         'name' => 'Product 2',
-        //         'description' => 'Description of Product 2',
-        //         'is_active' => false,
-        //         'price' => 20.50,
-        //     ],
-        //     [
-        //         'name' => 'Product 3',
-        //         'description' => 'Description of Product 3',
-        //         'is_active' => true,
-        //         'price' => 15.75,
-        //     ],
-        // ];
+        User::create([
+            'username' => "reza",
+            'email' => "test@g.com",
+            'password' => Hash::make('password'),
+        ]);
+        $products = [
+            [
+                'name' => 'Product 1',
+                'description' => 'Description of Product 1',
+                'is_active' => true,
+                'price' => 10.99,
+            ],
+            [
+                'name' => 'Product 2',
+                'description' => 'Description of Product 2',
+                'is_active' => false,
+                'price' => 20.50,
+            ],
+            [
+                'name' => 'Product 3',
+                'description' => 'Description of Product 3',
+                'is_active' => true,
+                'price' => 15.75,
+            ],
+        ];
 
-        // // Loop through each product data and create records in database
-        // foreach ($products as $product) {
-        //     Product::create($product);
-        // }
-        // $products = Product::all();
+        // Loop through each product data and create records in database
+        foreach ($products as $product) {
+            Product::create($product);
+        }
+        $products = Product::all();
 
-        // // Buat data dummy stok produk
-        // foreach ($products as $product) {
-        //     ProductStock::create([
-        //         'id_product' => $product->id,
-        //         'units' => rand(0, 100), // Stok produk diacak antara 0 dan 100
-        //     ]);
-        // }
+        // Buat data dummy stok produk
+        foreach ($products as $product) {
+            ProductStock::create([
+                'id_product' => $product->id,
+                'units' => rand(0, 100), // Stok produk diacak antara 0 dan 100
+            ]);
+        }
 
 
         $categories = [
