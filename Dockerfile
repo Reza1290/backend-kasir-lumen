@@ -1,5 +1,5 @@
 # Use the official PHP image as base
-FROM php:8.0-cli
+FROM php:8.2.4-cli
 
 # Install dependencies
 RUN apt-get update && apt-get install -y \
