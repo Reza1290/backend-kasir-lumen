@@ -19,7 +19,7 @@ RUN useradd -ms /bin/bash composer
 WORKDIR /var/www/html
 
 # Copy composer files and install dependencies
-COPY composer.json composer.lock ./
+COPY composer.json ./
 
 # Clean up the vendor directory
 RUN rm -rf vendor
