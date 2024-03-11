@@ -15,15 +15,14 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 # Set the working directory in the container
 WORKDIR /var/www/html
 
-# RUN cp -n /var/www/html/docker/.env
-
 # Copy composer files and install dependencies
 COPY composer.json composer.lock ./
 
-ENV COMPOSER_ALLOW_SUPERUSER=1
+# Clean up the vendor directory
+RUN rm -rf vendor
 
+# Run composer install without optimizations
 RUN composer install --no-scripts --no-autoloader
-
 
 # Copy the rest of the application code
 COPY . .
